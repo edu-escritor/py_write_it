@@ -1,0 +1,24 @@
+[project]
+name = "writeit"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Eduardo Fernandes", email = "eduardo.fernandes.pt@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "black>=26.5.1",
+    "pydantic>=2.13.5",
+    "python-slugify>=9.1.2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]
+
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
