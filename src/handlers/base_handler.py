@@ -1,9 +1,11 @@
 from abc import ABC
 from pathlib import Path
 from typing import Final
+
+from jinja2 import Environment, PackageLoader
+
 from models.project import Project
 from translations.translation_factory import TranslationFactory
-from jinja2 import Environment, PackageLoader
 
 
 class BaseHandler(ABC):
@@ -29,6 +31,21 @@ class BaseHandler(ABC):
         name = self._translate("files.segments.part")
 
         return self.project.root / f"{name}_{part:02}"
+
+    def _get_context_folder(
+        self,
+        part: int = 0,
+    ) -> Path:
+        if self.project.is_parted:
+            if part <= 0:
+                raise ValueError("The part must be greater than zero!")
+
+            return self._get_part_folder(part)
+
+        if self.project.is_chaptered:
+            return self.project.root / self._translate("files.segments.chapters")
+
+        return self.project.root / self._translate("files.segments.text")
 
     def _translate(self, key: str) -> str:
         translator = TranslationFactory.get(self.project.locale)
