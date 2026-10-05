@@ -283,6 +283,9 @@ class Project:
         return self.project_type == ProjectType.STANDALONE
 
     def save(self) -> None:
+        if self.created_at != date.today():
+            self.updated_at = date.today()
+
         data = {
             "title": self.title,
             "slug": self.slug,
