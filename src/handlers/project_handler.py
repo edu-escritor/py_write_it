@@ -8,6 +8,7 @@ from validators.is_folder import IsFolder
 from .base_handler import BaseHandler
 from enums.project_field import ProjectField
 from naming.slugifier import Slugifier
+from .part_handler import PartHandler
 
 
 class ProjectHandler(BaseHandler):
@@ -134,7 +135,7 @@ class ProjectHandler(BaseHandler):
             self._add_folder_part(part)
 
     def _add_folder_part(self, part: int) -> None:
-        name = self._translate("files.segments.part")
-        folder = self.project.root / f"{name}_{part:02}"
+        folder = self._get_part_folder(part)
 
         self._create_folder(folder)
+        PartHandler(self.project).create(part)

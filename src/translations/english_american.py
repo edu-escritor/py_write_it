@@ -26,5 +26,5 @@ class EnglishAmerican(BaseTranslation):
         "templates.master.e-mail": "Email",
         "templates.master.phone": "Cellphone",
         "templates.master.words": "Words",
-        "title.part": "Part «part»",
+        "templates.part.title": "Part «part»",
     }

@@ -26,5 +26,5 @@ class PortugueseEuropean(BaseTranslation):
         "templates.master.e-mail": "Email",
         "templates.master.phone": "Telemóvel",
         "templates.master.words": "Palavras",
-        "title.part": "Parte «part»",
+        "templates.part.title": "Parte «part»",
     }
