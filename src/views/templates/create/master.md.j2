@@ -1,0 +1,23 @@
+# {{ title }}
+
+::: {custom-style="Author_Info"}
+{{ author_label }}: {{ author_name }}
+
+{% if author_email %}
+{{ email_label }}: {{ author_email }}
+{% endif %}
+
+{% if author_phone %}
+{{ phone_label }}: {{ author_phone }}
+{% endif %}
+
+{{ date_label }}: {{ date }}
+
+{% if words %}
+{{ words_label }}: {{ words }}
+{% endif %}
+
+{% if characters %}
+{{ characters_label }}: {{ characters }}
+{% endif %}
+:::

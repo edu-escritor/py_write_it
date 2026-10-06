@@ -77,6 +77,11 @@ class ChapterHandler(BaseHandler):
 
         return destination_file
 
+    def import_content(self, file: str | Path) -> str:
+        """Imports a new part file"""
+
+        return self._read_file(file=Path(file)) + "\n\n"
+
     def _copy_file(
         self,
         source_file: Path,

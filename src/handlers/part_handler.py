@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from typing import Final
 
@@ -14,6 +15,10 @@ class PartHandler(BaseHandler):
         if not self.project.is_parted:
             raise ValueError("The project does not have parts!")
 
+    @staticmethod
+    def is_part_file(file: Path) -> bool:
+        return re.search(r"(?:^|_)i0+(?:_|\.md$)", file.name) is not None
+
     def create(self, part: int) -> Path:
         """Creates a new part file"""
 
@@ -27,7 +32,7 @@ class PartHandler(BaseHandler):
         """Imports a new part file"""
 
         file = self._create_file_name(part)
-        return self._read_file(file=file, is_part=True) + "\n"
+        return self._read_file(file=file, is_part=True) + "\n\n"
 
     def _create_file_name(self, part: int) -> Path:
         part_index = f"{part:03}"
