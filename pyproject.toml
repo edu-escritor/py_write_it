@@ -8,18 +8,24 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "black>=26.5.1",
+    "black>=26.10.0",
     "jinja2>=3.1.6",
     "pydantic>=2.13.5",
     "python-slugify>=9.1.2",
+    "typer>=0.27.2",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=9.1.1",
+    "pytest>=9.1.1"
 ]
-
 
 [tool.black]
 line-length = 120
 target-version = ["py312"]
+
+[tool.uv]
+package = true
+
+[project.scripts]
+writeit = "writeit.main:main"

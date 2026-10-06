@@ -1,23 +1,14 @@
-from pathlib import Path
 from typing import Final
 
 from enums.locales import Locales
 from enums.project_type import ProjectType
+from handlers.project.base_project_handler import BaseProjectHandler
 from models.project import Project
-from validators.is_folder import IsFolder
-from .base_handler import BaseHandler
-from enums.project_field import ProjectField
-from naming.slugifier import Slugifier
-from .part_handler import PartHandler
 
 
-class ProjectHandler(BaseHandler):
+class ProjectCreateHandler(BaseProjectHandler):
     FOLDER_META: Final[str] = "meta"
     FOLDER_PROMPTS: Final[str] = "prompts"
-
-    def __init__(self, base_folder: str | Path):
-        super().__init__()
-        self._base_folder: Path = IsFolder.validate(base_folder)
 
     def create(
         self,
@@ -52,57 +43,6 @@ class ProjectHandler(BaseHandler):
 
         return self.project
 
-    def load(self) -> Project:
-        """Load the project associated with the base folder."""
-
-        self._project = Project.load(self._base_folder)
-        return self.project
-
-    def rename(self, title: str) -> Project:
-        """Rename the project and its root folder."""
-
-        project = self._project or self.load()
-
-        old_root = project.root
-
-        project.title = title
-        project.slug = Slugifier.slugify(project.title)
-
-        new_root = project.root
-
-        old_root.rename(new_root)
-
-        project.save()
-
-        return project
-
-    def update(
-        self,
-        field: ProjectField,
-        value: str | None,
-    ) -> Project:
-        """Update a project field and persist the change."""
-
-        project = self._project or self.load()
-
-        setattr(project, field.value, value)
-        project.save()
-
-        return project
-
-    def add_part(self) -> Project:
-        """Add a new part to a parted project."""
-
-        if not self.project.is_parted:
-            raise RuntimeError("The project does not have parts!")
-
-        part = self.project.parts + 1
-        self.project.parts = part
-
-        self._add_folder_part(part)
-
-        return self.project
-
     def _add_folder_meta(self) -> None:
         folder = self.project.root / self.FOLDER_META
         self._create_folder(folder)
@@ -133,9 +73,3 @@ class ProjectHandler(BaseHandler):
 
         for part in range(1, self.project.parts + 1):
             self._add_folder_part(part)
-
-    def _add_folder_part(self, part: int) -> None:
-        folder = self._get_part_folder(part)
-
-        self._create_folder(folder)
-        PartHandler(self.project).create(part)
