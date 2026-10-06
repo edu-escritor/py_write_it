@@ -3,8 +3,9 @@ from typing import Final
 
 import typer
 
-from writeit.file import app as file_app
-from writeit.project import app as project_app
+from writeit.cli.compile import app as compile_app
+from writeit.cli.file import app as file_app
+from writeit.cli.project import app as project_app
 
 WRITE_IT_LABEL: Final[str] = "WritΞIt"
 
@@ -23,6 +24,11 @@ app.add_typer(
 app.add_typer(
     file_app,
     name="file",
+)
+
+app.add_typer(
+    compile_app,
+    name="compile",
 )
 
 

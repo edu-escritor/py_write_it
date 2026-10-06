@@ -6,8 +6,8 @@ from typing import Final
 from jinja2 import Environment, PackageLoader
 
 from writeit.handlers.base_handler import BaseHandler
-from writeit.parsers.chapter_parser import ChapterParser
 from writeit.models.project import Project
+from writeit.parsers.chapter_parser import ChapterParser
 
 
 class BaseCompiler(BaseHandler, ABC):
@@ -24,17 +24,17 @@ class BaseCompiler(BaseHandler, ABC):
 
         values = {
             "title": self.project.title,
-            "author_label": self._translate("master.author"),
+            "author_label": self._translate("templates.master.author"),
             "author_name": self.project.author,
-            "email_label": self._translate("master.email"),
+            "email_label": self._translate("templates.master.e-mail"),
             "author_email": self.project.email,
-            "phone_label": self._translate("master.phone"),
+            "phone_label": self._translate("templates.master.phone"),
             "author_phone": self.project.phone,
-            "date_label": self._translate("master.date"),
+            "date_label": self._translate("templates.master.date"),
             "date": date.today(),
-            "words_label": self._translate("master.words"),
+            "words_label": self._translate("templates.master.words"),
             "words": self.count_words(),
-            "characters_label": self._translate("master.characters"),
+            "characters_label": self._translate("templates.master.characters"),
             "characters": self.count_characters(),
         }
 
