@@ -14,4 +14,6 @@ def add_part(
         ),
     ],
 ) -> None:
-    ProjectAddPartHandler(base_folder).add_part()
+    project = ProjectAddPartHandler(base_folder).add_part()
+
+    typer.secho(f"Project part added:\n{str(project.parts)}", fg=typer.colors.BRIGHT_BLUE)

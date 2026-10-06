@@ -68,7 +68,7 @@ def create(
     if parts >= 1:
         project_type = ProjectType.PARTED
 
-    ProjectCreateHandler(base_folder).create(
+    project = ProjectCreateHandler(base_folder).create(
         title=title,
         author=author,
         project_type=project_type,
@@ -77,3 +77,5 @@ def create(
         email=email,
         phone=phone,
     )
+
+    typer.secho(f"Project created:\n{str(project.root)}", fg=typer.colors.BRIGHT_BLUE)

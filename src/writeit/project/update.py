@@ -47,3 +47,4 @@ def update(
     for field, value in fields.items():
         if value is not None:
             handler.update(field, value)
+            typer.secho(f"Project {field} update to {str(value)}", fg=typer.colors.BRIGHT_BLUE)

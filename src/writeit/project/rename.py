@@ -21,4 +21,5 @@ def rename(
         ),
     ],
 ) -> None:
-    ProjectRenameHandler(base_folder).rename(title)
+    project = ProjectRenameHandler(base_folder).rename(title)
+    typer.secho(f"Project renamed to:\n{str(project.root)}", fg=typer.colors.BRIGHT_BLUE)

@@ -3,6 +3,7 @@ from typing import Final
 
 import typer
 
+from writeit.file import app as file_app
 from writeit.project import app as project_app
 
 WRITE_IT_LABEL: Final[str] = "WritΞIt"
@@ -17,6 +18,11 @@ app = typer.Typer(
 app.add_typer(
     project_app,
     name="project",
+)
+
+app.add_typer(
+    file_app,
+    name="file",
 )
 
 
