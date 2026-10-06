@@ -2,6 +2,7 @@ from typing import Final
 
 from enums.locales import Locales
 from enums.project_type import ProjectType
+from handlers.chapter_handler import ChapterHandler
 from handlers.project.base_project_handler import BaseProjectHandler
 from models.project import Project
 
@@ -58,6 +59,7 @@ class ProjectCreateHandler(BaseProjectHandler):
         folder = self.project.root / self._translate("files.segments.text")
 
         self._create_folder(folder)
+        file = ChapterHandler(self.project).create(self.project.title)
 
     def _add_folder_chapters(self) -> None:
         if not self.project.is_chaptered:

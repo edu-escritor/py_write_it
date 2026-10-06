@@ -14,22 +14,36 @@ def update(
             help="Project folder.",
         ),
     ],
-    field: Annotated[
-        ProjectField,
+    author: Annotated[
+        str | None,
         typer.Option(
-            "--field",
-            help="Project field.",
+            "--author",
+            help="Project author.",
         ),
-    ],
-    value: Annotated[
-        str,
+    ] = None,
+    email: Annotated[
+        str | None,
         typer.Option(
-            "--value",
-            help="New value.",
+            "--email",
+            help="Author email.",
         ),
-    ],
+    ] = None,
+    phone: Annotated[
+        str | None,
+        typer.Option(
+            "--phone",
+            help="Author phone.",
+        ),
+    ] = None,
 ) -> None:
-    ProjectUpdateHandler(base_folder).update(
-        field,
-        value,
-    )
+    handler = ProjectUpdateHandler(base_folder)
+
+    fields = {
+        ProjectField.AUTHOR: author,
+        ProjectField.EMAIL: email,
+        ProjectField.PHONE: phone,
+    }
+
+    for field, value in fields.items():
+        if value is not None:
+            handler.update(field, value)

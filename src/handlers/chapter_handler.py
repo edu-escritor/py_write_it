@@ -33,7 +33,7 @@ class ChapterHandler(BaseHandler):
 
         content = self._create_content(title)
         file.write_text(
-            content + "\n",
+            content + "\n\n",
             encoding="utf-8",
         )
 

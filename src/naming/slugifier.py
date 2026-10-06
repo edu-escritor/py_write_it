@@ -13,15 +13,20 @@ class Slugifier:
         max_length: int = 250,
     ) -> str:
 
-        to_handle = Slugifier._apply_rules(text)
-        to_handle = " ".join(to_handle.split()).strip()
+        result = Slugifier._apply_rules(text)
+        result = " ".join(result.split()).strip()
 
         result = slugify(
-            text=to_handle,
-            separator=separator,
+            text=result,
+            separator=" ",
             lowercase=lowercase,
             max_length=max_length,
         )
+
+        result = Slugifier._apply_rules(result)
+        result = " ".join(result.split()).strip()
+
+        result = result.replace(" ", separator)
 
         if not lowercase:
             result = result.upper()

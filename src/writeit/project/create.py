@@ -65,6 +65,9 @@ def create(
         ),
     ] = None,
 ) -> None:
+    if parts >= 1:
+        project_type = ProjectType.PARTED
+
     ProjectCreateHandler(base_folder).create(
         title=title,
         author=author,

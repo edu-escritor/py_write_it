@@ -1,3 +1,4 @@
+import sys
 from typing import Final
 
 import typer
@@ -8,7 +9,7 @@ WRITE_IT_LABEL: Final[str] = "WritΞIt"
 
 app = typer.Typer(
     name="writeit",
-    help=(f"[green]{WRITE_IT_LABEL}[/green]: " "manage your [green]writing[/green] like a [green]pro[/green]."),
+    help=f"[green]{WRITE_IT_LABEL}[/green]: " "manage your [green]writing[/green] like a [green]pro[/green].",
     no_args_is_help=True,
     rich_markup_mode="rich",
 )
@@ -20,7 +21,15 @@ app.add_typer(
 
 
 def main() -> None:
-    app()
+    try:
+        app()
+    except Exception as error:
+        typer.secho(
+            f"\n##### {WRITE_IT_LABEL} ΞRROR: {error}\n",
+            fg=typer.colors.BRIGHT_RED,
+            err=True,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":
