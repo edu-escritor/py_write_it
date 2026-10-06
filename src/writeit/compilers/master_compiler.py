@@ -42,6 +42,19 @@ class MasterCompiler:
 
         raise RuntimeError(f"Unsupported project type: {self._project.project_type}")
 
+    def dry_run(self) -> str:
+        """Return a tree with the files that would be included."""
+        if self._project.is_standalone:
+            files = StandaloneCompiler(self._project).dry_run()
+        elif self._project.is_chaptered:
+            files = ChapteredCompiler(self._project).dry_run()
+        elif self._project.is_parted:
+            files = PartedCompiler(self._project).dry_run()
+        else:
+            raise RuntimeError(f"Unsupported project type: {self._project.project_type}")
+
+        return self._format_tree(files)
+
     def compile(self) -> Path:
         """Compile the master Markdown file into an ODT document."""
         source = self._project.root / BaseCompiler.FILE
@@ -90,3 +103,27 @@ class MasterCompiler:
             shutil.copy(source, temporary_path)
 
         return temporary_path
+
+    @staticmethod
+    def _format_tree(files: list[Path]) -> str:
+        folders: dict[Path, list[Path]] = {}
+
+        for file in files:
+            folders.setdefault(file.parent, []).append(file)
+
+        lines = ["."]
+
+        for folder_index, (folder, folder_files) in enumerate(folders.items()):
+            last_folder = folder_index == len(folders) - 1
+            folder_branch = "└──" if last_folder else "├──"
+            folder_prefix = "    " if last_folder else "│   "
+
+            lines.append(f"{folder_branch} {folder.name}")
+
+            for file_index, file in enumerate(folder_files):
+                last_file = file_index == len(folder_files) - 1
+                file_branch = "└──" if last_file else "├──"
+
+                lines.append(f"{folder_prefix}{file_branch} {file.name}")
+
+        return "\n".join(lines)

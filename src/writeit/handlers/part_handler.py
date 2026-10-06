@@ -22,7 +22,7 @@ class PartHandler(BaseHandler):
     def create(self, part: int) -> Path:
         """Creates a new part file"""
 
-        file = self._create_file_name(part)
+        file = self.create_file_name(part)
         content = self._create_content(part)
         file.write_text(content + "\n", "utf-8")
 
@@ -31,14 +31,15 @@ class PartHandler(BaseHandler):
     def import_content(self, part: int) -> str:
         """Imports a new part file"""
 
-        file = self._create_file_name(part)
+        file = self.create_file_name(part)
         return self._read_file(file=file, is_part=True) + "\n\n"
 
-    def _create_file_name(self, part: int) -> Path:
+    def create_file_name(self, part: int) -> Path:
         part_index = f"{part:03}"
+        part_version = f"{part:02}"
 
         part_slug = self._translate("files.segments.part")
-        part_slug = f"{part_slug}-{part_index}"
+        part_slug = f"{part_slug}-{part_version}"
 
         file = self.FILE_PATTERN.replace("«part_index»", part_index).replace("«part_slug»", part_slug)
 

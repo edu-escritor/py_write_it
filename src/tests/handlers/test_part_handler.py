@@ -1,7 +1,7 @@
 import pytest
 
-from writeit.handlers.part_handler import PartHandler
 from writeit.enums.project_type import ProjectType
+from writeit.handlers.part_handler import PartHandler
 from writeit.models.project import Project
 
 
@@ -81,7 +81,7 @@ class TestPartHandler:
 
         handler = PartHandler(project)
 
-        file = handler._create_file_name(12)
+        file = handler.create_file_name(12)
 
         assert file == (handler._get_part_folder(12) / "p012_i0000_parte-012.md")
 
@@ -98,7 +98,7 @@ class TestPartHandler:
 
         handler = PartHandler(project)
 
-        file = handler._create_file_name(1)
+        file = handler.create_file_name(1)
 
         assert file.name == "p001_i0000_parte-001.md"
 

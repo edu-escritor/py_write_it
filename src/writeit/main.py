@@ -1,4 +1,3 @@
-import sys
 from typing import Final
 
 import typer
@@ -33,15 +32,15 @@ app.add_typer(
 
 
 def main() -> None:
-    try:
-        app()
-    except Exception as error:
-        typer.secho(
-            f"\n##### {WRITE_IT_LABEL} ΞRROR: {error}\n",
-            fg=typer.colors.BRIGHT_RED,
-            err=True,
-        )
-        sys.exit(1)
+    # try:
+    app()
+    # except Exception as error:
+    #     typer.secho(
+    #         f"\n##### {WRITE_IT_LABEL} ΞRROR: {error}\n",
+    #         fg=typer.colors.BRIGHT_RED,
+    #         err=True,
+    #     )
+    #     sys.exit(1)
 
 
 if __name__ == "__main__":
