@@ -1,7 +1,7 @@
-from enums.project_field import ProjectField
-from handlers.project.project_create_handler import ProjectCreateHandler
-from handlers.project.project_update_handler import ProjectUpdateHandler
-from models.project import Project
+from writeit.enums.project_field import ProjectField
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.handlers.project.project_update_handler import ProjectUpdateHandler
+from writeit.models.project import Project
 
 
 class TestProjectUpdateHandler:

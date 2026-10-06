@@ -1,6 +1,6 @@
-from enums.project_type import ProjectType
-from handlers.project.project_create_handler import ProjectCreateHandler
-from models.project import Project
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.enums.project_type import ProjectType
+from writeit.models.project import Project
 
 
 class TestProjectCreateHandler:

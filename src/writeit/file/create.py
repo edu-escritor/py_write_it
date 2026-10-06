@@ -3,8 +3,8 @@ from typing import Annotated
 
 import typer
 
-from handlers.chapter_handler import ChapterHandler
-from models.project import Project
+from writeit.handlers.chapter_handler import ChapterHandler
+from writeit.models.project import Project
 
 
 def create(

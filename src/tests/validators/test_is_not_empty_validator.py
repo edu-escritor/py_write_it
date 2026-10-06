@@ -1,7 +1,7 @@
 import pytest
 
-from errors.validation_error import ValidationError
-from validators.is_not_empty_validator import IsNotEmptyValidator
+from writeit.validators.is_not_empty_validator import IsNotEmptyValidator
+from writeit.errors.validation_error import ValidationError
 
 
 class TestIsNotEmptyValidator:

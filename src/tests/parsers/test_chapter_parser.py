@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from models.chapter import Chapter
-from parsers.chapter_parser import ChapterParser
+from writeit.parsers.chapter_parser import ChapterParser
+from writeit.models.chapter import Chapter
 
 
 class TestChapterParser:

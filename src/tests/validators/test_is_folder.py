@@ -2,8 +2,8 @@
 
 import pytest
 
-from errors.validation_error import ValidationError
-from validators.is_folder import IsFolder
+from writeit.validators.is_folder import IsFolder
+from writeit.errors.validation_error import ValidationError
 
 
 class TestIsFolder:

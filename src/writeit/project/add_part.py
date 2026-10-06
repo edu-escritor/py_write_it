@@ -3,7 +3,7 @@ from typing import Annotated
 
 import typer
 
-from handlers.project.project_add_part_handler import ProjectAddPartHandler
+from writeit.handlers.project.project_add_part_handler import ProjectAddPartHandler
 
 
 def add_part(

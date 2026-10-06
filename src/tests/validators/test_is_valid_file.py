@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from errors.validation_error import ValidationError
-from validators.is_valid_file import IsValidFile
+from writeit.validators.is_valid_file import IsValidFile
+from writeit.errors.validation_error import ValidationError
 
 
 class TestIsValidFile:

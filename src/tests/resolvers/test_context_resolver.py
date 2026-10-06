@@ -1,8 +1,8 @@
 import pytest
 
-from enums.project_type import ProjectType
-from models.project import Project
-from resolvers.context_resolver import ContextResolver
+from writeit.resolvers.context_resolver import ContextResolver
+from writeit.enums.project_type import ProjectType
+from writeit.models.project import Project
 
 
 class TestContextResolver:

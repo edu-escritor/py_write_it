@@ -3,9 +3,9 @@ from typing import Annotated
 
 import typer
 
-from enums.locales import Locales
-from enums.project_type import ProjectType
-from handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.enums.project_type import ProjectType
+from writeit.enums.locales import Locales
 
 
 def create(

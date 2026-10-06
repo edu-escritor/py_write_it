@@ -1,10 +1,10 @@
-from handlers.project.base_project_handler import BaseProjectHandler
-
+from writeit.handlers.project.base_project_handler import BaseProjectHandler
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
 
 class TestBaseProjectHandler:
 
     def test_load_project(self, tmp_path):
-        from handlers.project.project_create_handler import ProjectCreateHandler
+
 
         creator = ProjectCreateHandler(tmp_path)
 

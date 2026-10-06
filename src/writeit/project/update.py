@@ -3,8 +3,8 @@ from typing import Annotated
 
 import typer
 
-from enums.project_field import ProjectField
-from handlers.project.project_update_handler import ProjectUpdateHandler
+from writeit.handlers.project.project_update_handler import ProjectUpdateHandler
+from writeit.enums.project_field import ProjectField
 
 
 def update(

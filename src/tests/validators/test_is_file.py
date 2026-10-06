@@ -2,8 +2,8 @@
 
 import pytest
 
-from errors.validation_error import ValidationError
-from validators.is_file import IsFile
+from writeit.validators.is_file import IsFile
+from writeit.errors.validation_error import ValidationError
 
 
 class TestIsFile:

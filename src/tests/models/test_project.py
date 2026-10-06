@@ -1,13 +1,12 @@
 import json
-
 from datetime import date
 
 import pytest
 
-from enums.locales import Locales
-from enums.project_type import ProjectType
-from errors.validation_error import ValidationError
-from models.project import Project
+from writeit.enums.project_type import ProjectType
+from writeit.enums.locales import Locales
+from writeit.errors.validation_error import ValidationError
+from writeit.models.project import Project
 
 
 class TestProject:

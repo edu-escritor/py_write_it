@@ -3,10 +3,10 @@ from pathlib import Path
 
 import pytest
 
-from enums.project_type import ProjectType
-from handlers.chapter_handler import ChapterHandler
-from models.chapter import Chapter
-from models.project import Project
+from writeit.enums.project_type import ProjectType
+from writeit.handlers.chapter_handler import ChapterHandler
+from writeit.models.chapter import Chapter
+from writeit.models.project import Project
 
 
 class TestChapterHandler:

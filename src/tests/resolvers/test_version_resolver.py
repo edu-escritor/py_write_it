@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from enums.project_type import ProjectType
-from models.project import Project
-from resolvers.version_resolver import VersionResolver
+from writeit.resolvers.version_resolver import VersionResolver
+from writeit.enums.project_type import ProjectType
+from writeit.models.project import Project
 
 
 class TestVersionResolver:

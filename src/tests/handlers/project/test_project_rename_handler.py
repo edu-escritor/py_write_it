@@ -1,8 +1,8 @@
 from datetime import date
 
-from handlers.project.project_create_handler import ProjectCreateHandler
-from handlers.project.project_rename_handler import ProjectRenameHandler
-from models.project import Project
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.handlers.project.project_rename_handler import ProjectRenameHandler
+from writeit.models.project import Project
 
 
 class TestProjectRenameHandler:

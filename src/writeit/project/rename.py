@@ -3,7 +3,7 @@ from typing import Annotated
 
 import typer
 
-from handlers.project.project_rename_handler import ProjectRenameHandler
+from writeit.handlers.project.project_rename_handler import ProjectRenameHandler
 
 
 def rename(

@@ -1,9 +1,9 @@
 import pytest
 
-from enums.project_type import ProjectType
-from handlers.project.project_add_part_handler import ProjectAddPartHandler
-from handlers.project.project_create_handler import ProjectCreateHandler
-from models.project import Project
+from writeit.enums.project_type import ProjectType
+from writeit.handlers.project.project_add_part_handler import ProjectAddPartHandler
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.models.project import Project
 
 
 class TestProjectAddPartHandler:
