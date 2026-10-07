@@ -1,24 +1,24 @@
 import re
 from pathlib import Path
 
-from writeit.validators.is_file import IsFile
 from writeit.errors.validation_error import ValidationError
+from writeit.validators.is_file import IsFile
 
 
 class IsValidFile:
     @staticmethod
     def validate(value: str | Path | None) -> Path:
         if value is None:
-            raise ValidationError("The path does not exist!")
+            raise ValidationError(f"'{value}' does not exist!")
 
         file = IsFile.validate(value)
 
         if file.suffix != ".md":
-            raise ValidationError("The file does not have the correct extension!")
+            raise ValidationError(f"'{value}' does not have the correct extension!")
 
-        pattern = r"(?:(?:p\d{3}_)?i\d{4}_)?" r"v\d{3}_" r"[a-z0-9]+(?:-[a-z0-9]+)*" r"\.md"
+        pattern = r"(?:(?:p\d+_)?i\d+_)?v\d+_[a-z0-9]+(?:-[a-z0-9]+)*\.md"
 
         if not re.fullmatch(pattern, file.name):
-            raise ValidationError("The file is invalid!")
+            raise ValidationError("f'{value}' is invalid!")
 
         return file

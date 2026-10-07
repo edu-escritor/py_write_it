@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from writeit.resolvers.chapter_name_resolver import ChapterNameResolver
 from writeit.enums.project_type import ProjectType
 from writeit.models.project import Project
+from writeit.resolvers.chapter_name_resolver import ChapterNameResolver
 
 
 class TestChapterNameResolver:
@@ -23,7 +23,7 @@ class TestChapterNameResolver:
             version=3,
         )
 
-        assert result == "v003_dedicatoria.md"
+        assert result == "v03_dedicatoria.md"
 
     def test_chaptered(
         self,
@@ -42,7 +42,7 @@ class TestChapterNameResolver:
             index=20,
         )
 
-        assert result == "i0020_v003_dedicatoria.md"
+        assert result == "i0020_v03_dedicatoria.md"
 
     def test_parted(
         self,
@@ -63,4 +63,4 @@ class TestChapterNameResolver:
             part=2,
         )
 
-        assert result == ("p002_i0020_v003_dedicatoria.md")
+        assert result == ("p02_i0020_v03_dedicatoria.md")

@@ -1,3 +1,4 @@
+from writeit.helpers.segment_formatter import SegmentFormatter
 from writeit.naming.slugifier import Slugifier
 from writeit.resolvers.base_resolver import BaseResolver
 
@@ -15,18 +16,24 @@ class ChapterNameResolver(BaseResolver):
         if title is None and slug is None:
             raise ValueError("Title or slug is required!")
 
-        if slug is None:
-            slug = Slugifier.slugify(title)
+        slug = slug or Slugifier.slugify(title)
 
         segments: list[str] = []
 
         if self.project.is_parted:
-            segments.append(f"p{part:03}")
+            segment = SegmentFormatter.part(part)
+            if segment != "":
+                segments.append(segment)
 
         if not self.project.is_standalone:
-            segments.append(f"i{index:04}")
+            segment = SegmentFormatter.index(index)
+            if segment != "":
+                segments.append(segment)
 
-        segments.append(f"v{version:03}")
+        segment = SegmentFormatter.version(version)
+        if segment != "":
+            segments.append(segment)
+
         segments.append(slug)
 
         return "_".join(segments) + ".md"

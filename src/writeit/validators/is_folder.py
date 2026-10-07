@@ -27,9 +27,9 @@ class IsFolder:
     @staticmethod
     def _validate_path(value: Path) -> Path:
         if not value.exists():
-            raise ValidationError("The path does not exist!")
+            raise ValidationError(f"'{value}' does not exist!")
 
         if not value.is_dir():
-            raise ValidationError("The path is not a directory!")
+            raise ValidationError(f"'{value}' is not a directory!")
 
         return value.expanduser().resolve()

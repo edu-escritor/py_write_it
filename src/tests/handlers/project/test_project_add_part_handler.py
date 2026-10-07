@@ -1,8 +1,10 @@
 import pytest
 
+from writeit.enums.locales import Locales
 from writeit.enums.project_type import ProjectType
 from writeit.handlers.project.project_add_part_handler import ProjectAddPartHandler
 from writeit.handlers.project.project_create_handler import ProjectCreateHandler
+from writeit.helpers.segment_formatter import SegmentFormatter
 from writeit.models.project import Project
 
 
@@ -20,8 +22,7 @@ class TestProjectAddPartHandler:
 
         updated = handler.add_part()
 
-        name = handler._translate("files.segments.part")
-        folder = project.root / f"{name}_03"
+        folder = project.root / SegmentFormatter.part_slug(value=3, locale=Locales.PORTUGUESE_EUROPEAN, connector="_")
 
         assert updated.parts == 3
         assert folder.is_dir()

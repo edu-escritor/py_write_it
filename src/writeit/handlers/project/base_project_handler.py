@@ -2,8 +2,9 @@ from pathlib import Path
 
 from writeit.handlers.base_handler import BaseHandler
 from writeit.handlers.part_handler import PartHandler
-from writeit.validators.is_folder import IsFolder
 from writeit.models.project import Project
+from writeit.resolvers.context_resolver import ContextResolver
+from writeit.validators.is_folder import IsFolder
 
 
 class BaseProjectHandler(BaseHandler):
@@ -27,7 +28,7 @@ class BaseProjectHandler(BaseHandler):
         return project
 
     def _add_folder_part(self, part: int) -> None:
-        folder = self._get_part_folder(part)
+        folder = ContextResolver(self.project).resolve(part)
 
         self._create_folder(folder)
         PartHandler(self.project).create(part)

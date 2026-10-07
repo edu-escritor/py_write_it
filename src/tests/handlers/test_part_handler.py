@@ -3,6 +3,7 @@ import pytest
 from writeit.enums.project_type import ProjectType
 from writeit.handlers.part_handler import PartHandler
 from writeit.models.project import Project
+from writeit.resolvers.context_resolver import ContextResolver
 
 
 class TestPartHandler:
@@ -44,14 +45,15 @@ class TestPartHandler:
 
         handler = PartHandler(project)
 
-        folder = handler._get_part_folder(1)
+        folder = ContextResolver(project).resolve(1)
+
         folder.mkdir()
 
         file = handler.create(1)
 
         assert file.is_file()
         assert file.parent == folder
-        assert file.name == "p001_i0000_parte-001.md"
+        assert file.name == "p01_i0000_parte-01.md"
 
     def test_create_file_content(self, tmp_path):
         project = Project(
@@ -64,7 +66,7 @@ class TestPartHandler:
 
         handler = PartHandler(project)
 
-        folder = handler._get_part_folder(1)
+        folder = ContextResolver(project).resolve(1)
         folder.mkdir()
 
         file = handler.create(1)
@@ -83,7 +85,7 @@ class TestPartHandler:
 
         file = handler.create_file_name(12)
 
-        assert file == (handler._get_part_folder(12) / "p012_i0000_parte-012.md")
+        assert file == (ContextResolver(project).resolve(12) / "p12_i0000_parte-12.md")
 
     def test_create_file_name_pads_part_index(
         self,
@@ -100,7 +102,7 @@ class TestPartHandler:
 
         file = handler.create_file_name(1)
 
-        assert file.name == "p001_i0000_parte-001.md"
+        assert file.name == "p01_i0000_parte-01.md"
 
     def test_import_content(self, tmp_path):
         project = Project(
@@ -113,7 +115,7 @@ class TestPartHandler:
 
         handler = PartHandler(project)
 
-        folder = handler._get_part_folder(1)
+        folder = ContextResolver(project).resolve(1)
         folder.mkdir()
 
         handler.create(1)

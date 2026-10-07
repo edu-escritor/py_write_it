@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from writeit.validators.is_valid_file import IsValidFile
 from writeit.errors.validation_error import ValidationError
+from writeit.validators.is_valid_file import IsValidFile
 
 
 class TestIsValidFile:
@@ -33,15 +33,14 @@ class TestIsValidFile:
         "file_name",
         [
             "dedicatoria.md",
-            "v03_dedicatoria.md",
-            "v0003_dedicatoria.md",
-            "i020_v003_dedicatoria.md",
-            "p01_i0020_v003_dedicatoria.md",
-            "p001_v003_dedicatoria.md",
-            "v003_-dedicatoria.md",
-            "v003_dedicatoria-.md",
-            "v003_dedicatoria--final.md",
-            "v003_dedicatoria.txt",
+            "v_dedicatoria.md",
+            "i0020_dedicatoria.md",
+            "p01_i0020_dedicatoria.md",
+            "p01_v03_dedicatoria.md",
+            "v03_-dedicatoria.md",
+            "v03_dedicatoria-.md",
+            "v03_dedicatoria--final.md",
+            "v03_dedicatoria.txt",
         ],
     )
     def test_invalid_file(

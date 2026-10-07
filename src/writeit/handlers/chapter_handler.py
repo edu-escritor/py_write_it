@@ -3,11 +3,12 @@ from datetime import date
 from pathlib import Path
 
 from writeit.handlers.base_handler import BaseHandler
+from writeit.models.chapter import Chapter
 from writeit.parsers.chapter_parser import ChapterParser
 from writeit.resolvers.chapter_name_resolver import ChapterNameResolver
+from writeit.resolvers.context_resolver import ContextResolver
 from writeit.resolvers.index_resolver import IndexResolver
 from writeit.resolvers.version_resolver import VersionResolver
-from writeit.models.chapter import Chapter
 
 
 class ChapterHandler(BaseHandler):
@@ -18,7 +19,8 @@ class ChapterHandler(BaseHandler):
         part: int = 0,
     ) -> Path:
         """Creates a new chapter file."""
-        folder = self._get_context_folder(part)
+
+        folder = ContextResolver(self.project).resolve(part)
 
         index = IndexResolver(self.project).next(folder)
 
@@ -58,7 +60,7 @@ class ChapterHandler(BaseHandler):
             file=file,
         )
         destination_file = self._destination_file_name(
-            chapter=ChapterParser.parse(source_file),
+            chapter=chapter,
             title=title,
             file=source_file,
         )

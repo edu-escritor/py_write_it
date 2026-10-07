@@ -4,8 +4,8 @@ from typing import Final
 
 from jinja2 import Environment, PackageLoader
 
-from writeit.translations.translation_factory import TranslationFactory
 from writeit.models.project import Project
+from writeit.translations.translation_factory import TranslationFactory
 
 
 class BaseHandler(ABC):
@@ -20,32 +20,6 @@ class BaseHandler(ABC):
             raise ValueError("Load the project first!")
 
         return self._project
-
-    def _get_part_folder(self, part: int) -> Path:
-        if not self.project.is_parted:
-            raise RuntimeError("The project does not have parts!")
-
-        if self.project.parts < part:
-            raise ValueError("The part of the project doesn't exist!")
-
-        name = self._translate("files.segments.part")
-
-        return self.project.root / f"{name}_{part:02}"
-
-    def _get_context_folder(
-        self,
-        part: int = 0,
-    ) -> Path:
-        if self.project.is_parted:
-            if part <= 0:
-                raise ValueError("The part must be greater than zero!")
-
-            return self._get_part_folder(part)
-
-        if self.project.is_chaptered:
-            return self.project.root / self._translate("files.segments.chapters")
-
-        return self.project.root / self._translate("files.segments.text")
 
     def _translate(self, key: str) -> str:
         translator = TranslationFactory.get(self.project.locale)

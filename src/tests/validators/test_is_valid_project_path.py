@@ -1,9 +1,7 @@
-# tests/test_is_valid_project_path.py
-
 import pytest
 
-from writeit.validators.is_valid_project_path import IsValidProjectPath
 from writeit.errors.validation_error import ValidationError
+from writeit.validators.is_valid_project_path import IsValidProjectPath
 
 
 class TestIsValidProjectPath:

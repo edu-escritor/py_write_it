@@ -27,7 +27,7 @@ class IndexResolver(BaseResolver):
 
         for file in self.folder.glob("*.md"):
             match = re.search(
-                r"(?:^|_)i(\d{4})(?:_|$)",
+                r"(?:^|_)i(\d+)(?:_|$)",
                 file.stem,
             )
 

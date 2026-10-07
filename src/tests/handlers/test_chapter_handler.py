@@ -19,21 +19,21 @@ class TestChapterHandler:
                 0,
                 0,
                 "texto",
-                "v001_primeiro-capitulo.md",
+                "v01_primeiro-capitulo.md",
             ),
             (
                 ProjectType.CHAPTERED,
                 0,
                 0,
                 "capitulos",
-                "i0010_v001_primeiro-capitulo.md",
+                "i0010_v01_primeiro-capitulo.md",
             ),
             (
                 ProjectType.PARTED,
                 1,
                 1,
                 "parte_01",
-                "p001_i0010_v001_primeiro-capitulo.md",
+                "p01_i0010_v01_primeiro-capitulo.md",
             ),
         ],
     )
@@ -80,13 +80,15 @@ class TestChapterHandler:
         folder = project.root / "capitulos"
         folder.mkdir(parents=True)
 
-        (folder / "i0010_v001_primeiro.md").touch()
+        first_file = folder / "i0010_v01_primeiro.md"
+        first_file.touch()
+        assert first_file.exists()
 
         handler = ChapterHandler(project)
 
         file = handler.create("Segundo")
 
-        assert file.name == ("i0020_v001_segundo.md")
+        assert file.name == "i0020_v01_segundo.md"
 
     def test_create_version(
         self,
@@ -100,7 +102,7 @@ class TestChapterHandler:
         folder = project.root / "capitulos"
         folder.mkdir(parents=True)
 
-        source = folder / "i0010_v001_primeiro-capitulo.md"
+        source = folder / "i0010_v01_primeiro-capitulo.md"
         source.write_text(
             "# Primeiro capítulo\n\nConteúdo.\n",
             encoding="utf-8",
@@ -110,7 +112,7 @@ class TestChapterHandler:
 
         file = handler.create_version(source)
 
-        assert file == (folder / "i0010_v002_primeiro-capitulo.md")
+        assert file == (folder / "i0010_v02_primeiro-capitulo.md")
         assert file.exists()
 
         assert file.read_text(encoding="utf-8") == source.read_text(encoding="utf-8")
@@ -129,7 +131,7 @@ class TestChapterHandler:
         folder = project.root / "capitulos"
         folder.mkdir(parents=True)
 
-        source = folder / "i0010_v001_primeiro-capitulo.md"
+        source = folder / "i0010_v01_primeiro-capitulo.md"
         source.write_text(
             "# Primeiro capítulo\n\nConteúdo.\n",
             encoding="utf-8",
@@ -142,7 +144,7 @@ class TestChapterHandler:
             title="Novo título",
         )
 
-        assert file == (folder / "i0010_v002_novo-titulo.md")
+        assert file == (folder / "i0010_v02_novo-titulo.md")
 
         assert file.read_text(encoding="utf-8") == "# Novo título\n\nConteúdo.\n"
 
@@ -208,10 +210,10 @@ class TestChapterHandler:
         folder = project.root / "capitulos"
         folder.mkdir(parents=True)
 
-        file = folder / "i0010_v001_primeiro-capitulo.md"
+        file = folder / "i0010_v01_primeiro-capitulo.md"
         file.touch()
 
-        (folder / "i0010_v003_primeiro-capitulo.md").touch()
+        (folder / "i0010_v03_primeiro-capitulo.md").touch()
 
         chapter = Chapter(
             context=folder.name,
@@ -228,7 +230,7 @@ class TestChapterHandler:
             file=file,
         )
 
-        assert result == (folder / "i0010_v003_primeiro-capitulo.md")
+        assert result == (folder / "i0010_v03_primeiro-capitulo.md")
 
     def test_destination_file_name(
         self,
@@ -242,7 +244,7 @@ class TestChapterHandler:
         folder = project.root / "capitulos"
         folder.mkdir(parents=True)
 
-        file = folder / "i0010_v003_primeiro-capitulo.md"
+        file = folder / "i0010_v03_primeiro-capitulo.md"
         file.touch()
 
         chapter = Chapter(
@@ -261,7 +263,7 @@ class TestChapterHandler:
             file=file,
         )
 
-        assert result == (folder / "i0010_v004_primeiro-capitulo.md")
+        assert result == (folder / "i0010_v04_primeiro-capitulo.md")
 
     def test_destination_file_name_with_new_title(
         self,
@@ -275,7 +277,7 @@ class TestChapterHandler:
         folder = project.root / "capitulos"
         folder.mkdir(parents=True)
 
-        file = folder / "i0010_v003_primeiro-capitulo.md"
+        file = folder / "i0010_v03_primeiro-capitulo.md"
         file.touch()
 
         chapter = Chapter(
@@ -294,7 +296,7 @@ class TestChapterHandler:
             file=file,
         )
 
-        assert result == (folder / "i0010_v004_titulo-alterado.md")
+        assert result == (folder / "i0010_v04_titulo-alterado.md")
 
     def test_create_content(
         self,

@@ -12,9 +12,9 @@ class ChapterParser:
         file = IsValidFile.validate(path)
 
         pattern = (
-            r"^(?:p(?P<part>\d{3})_)?"
-            r"(?:i(?P<index>\d{4})_)?"
-            r"v(?P<version>\d{3})_"
+            r"^(?:p(?P<part>\d+)_)?"
+            r"(?:i(?P<index>\d+)_)?"
+            r"v(?P<version>\d+)_"
             r"(?P<slug>[a-z0-9]+(?:-[a-z0-9]+)*)"
             r"\.md$"
         )

@@ -8,7 +8,7 @@ class VersionResolver(BaseResolver):
 
     def resolve(self, path: Path) -> int:
         if not path.is_file():
-            raise ValueError("The path must be a file!")
+            raise ValueError(f"'{path}' must be a file!")
 
         self.folder = path
 
@@ -24,7 +24,7 @@ class VersionResolver(BaseResolver):
         file: Path,
     ) -> int | None:
         match = re.search(
-            r"(?:^|_)i(\d{4})(?:_|$)",
+            r"(?:^|_)i(\d+)(?:_|$)",
             file.stem,
         )
 
@@ -44,7 +44,7 @@ class VersionResolver(BaseResolver):
                 continue
 
             match = re.search(
-                r"(?:^|_)v(\d{3})(?:_|$)",
+                r"(?:^|_)v(\d+)(?:_|$)",
                 file.stem,
             )
 

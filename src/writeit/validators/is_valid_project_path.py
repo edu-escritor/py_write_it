@@ -21,12 +21,12 @@ class IsValidProjectPath:
     @staticmethod
     def _validate_existing(path: Path) -> Path:
         if not path.is_dir():
-            raise ValidationError("The path is not a directory!")
+            raise ValidationError(f"'{path}' is not a directory!")
 
         project_file = path / IsValidProjectPath.PROJECT_FILE
 
         if not project_file.is_file():
-            raise ValidationError("The directory is not a WritIt project!")
+            raise ValidationError(f"'{project_file}' is not a WritIt project!")
 
         return path
 
@@ -35,11 +35,11 @@ class IsValidProjectPath:
         parent = path.parent
 
         if not parent.is_dir():
-            raise ValidationError("The parent directory does not exist!")
+            raise ValidationError(f"'{parent}' does not exist!")
 
         project_file = parent / IsValidProjectPath.PROJECT_FILE
 
         if project_file.exists():
-            raise ValidationError("The parent directory is already a WritIt project!")
+            raise ValidationError(f"'{parent}' directory is already a WritIt project!")
 
         return path

@@ -27,9 +27,9 @@ class IsFile:
     @staticmethod
     def _validate_path(value: Path) -> Path:
         if not value.exists():
-            raise ValidationError("The path does not exist!")
+            raise ValidationError(f"'{value}' does not exist!")
 
         if not value.is_file():
-            raise ValidationError("The path is not a file!")
+            raise ValidationError(f"'{value}' is not a file!")
 
         return value.expanduser().resolve()

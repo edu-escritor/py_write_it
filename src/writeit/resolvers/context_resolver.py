@@ -1,9 +1,10 @@
 from pathlib import Path
 
+from writeit.helpers.segment_formatter import SegmentFormatter
+from writeit.models.project import Project
 from writeit.resolvers.base_resolver import BaseResolver
 from writeit.translations.base_translation import BaseTranslation
 from writeit.translations.translation_factory import TranslationFactory
-from writeit.models.project import Project
 
 
 class ContextResolver(BaseResolver):
@@ -41,4 +42,4 @@ class ContextResolver(BaseResolver):
         if part is None or part == 0:
             raise ValueError("The part can't be None!")
 
-        return self.project.root / f'{self._translator.translate("files.segments.part")}_{part:02}'
+        return self.project.root / SegmentFormatter.part_slug(value=part, locale=self.project.locale, connector="_")

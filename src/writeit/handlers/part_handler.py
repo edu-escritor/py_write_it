@@ -3,7 +3,9 @@ from pathlib import Path
 from typing import Final
 
 from writeit.handlers.base_handler import BaseHandler
+from writeit.helpers.segment_formatter import SegmentFormatter
 from writeit.models.project import Project
+from writeit.resolvers.context_resolver import ContextResolver
 
 
 class PartHandler(BaseHandler):
@@ -35,17 +37,16 @@ class PartHandler(BaseHandler):
         return self._read_file(file=file, is_part=True) + "\n\n"
 
     def create_file_name(self, part: int) -> Path:
-        part_index = f"{part:03}"
-        part_version = f"{part:02}"
+        segments: list[str] = [
+            SegmentFormatter.part(part),
+            SegmentFormatter.index(value=0, allow_zero=True),
+            SegmentFormatter.part_slug(
+                value=part,
+                locale=self.project.locale,
+            ),
+        ]
 
-        part_slug = self._translate("files.segments.part")
-        part_slug = f"{part_slug}-{part_version}"
-
-        file = self.FILE_PATTERN.replace("«part_index»", part_index).replace("«part_slug»", part_slug)
-
-        folder = self._get_part_folder(part)
-
-        return folder / file
+        return ContextResolver(self.project).resolve(part) / ("_".join(segments) + ".md")
 
     def _create_content(self, part: int) -> str:
         values: dict[str, str] = {
