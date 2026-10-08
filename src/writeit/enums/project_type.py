@@ -1,5 +1,3 @@
-# models/project_type.py
-
 from enum import StrEnum
 
 

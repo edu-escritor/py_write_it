@@ -5,6 +5,7 @@ import typer
 
 from writeit.cli.compile import app as compile_app
 from writeit.cli.file import app as file_app
+from writeit.cli.image import app as image_app
 from writeit.cli.project import app as project_app
 
 WRITE_IT_LABEL: Final[str] = "WritΞIt"
@@ -29,6 +30,11 @@ app.add_typer(
 app.add_typer(
     compile_app,
     name="compile",
+)
+
+app.add_typer(
+    image_app,
+    name="image",
 )
 
 
