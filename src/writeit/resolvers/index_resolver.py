@@ -1,6 +1,7 @@
 import re
 from pathlib import Path
 
+from writeit.helpers.finder import Finder
 from writeit.resolvers.base_resolver import BaseResolver
 
 
@@ -25,7 +26,7 @@ class IndexResolver(BaseResolver):
     def _get_max_index(self) -> int:
         indexes: list[int] = []
 
-        for file in self.folder.glob("*.md"):
+        for file in Finder.find_all(self.folder):
             match = re.search(
                 r"(?:^|_)i(\d+)(?:_|$)",
                 file.stem,

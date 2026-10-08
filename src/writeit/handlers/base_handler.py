@@ -48,7 +48,7 @@ class BaseHandler(ABC):
         is_part: bool = False,
     ) -> str:
         if not file.exists():
-            raise FileNotFoundError(f"File not found: {file}")
+            raise FileNotFoundError(f"'{file}' does not exist!")
 
         if is_part and not self.project.is_parted:
             raise ValueError("The project does not have parts!")

@@ -45,15 +45,15 @@ class MasterCompiler:
     def dry_run(self) -> str:
         """Return a tree with the files that would be included."""
         if self._project.is_standalone:
-            files = StandaloneCompiler(self._project).dry_run()
+            found_files = StandaloneCompiler(self._project).dry_run()
         elif self._project.is_chaptered:
-            files = ChapteredCompiler(self._project).dry_run()
+            found_files = ChapteredCompiler(self._project).dry_run()
         elif self._project.is_parted:
-            files = PartedCompiler(self._project).dry_run()
+            found_files = PartedCompiler(self._project).dry_run()
         else:
             raise RuntimeError(f"Unsupported project type: {self._project.project_type}")
 
-        return self._format_tree(files)
+        return self._format_tree(found_files)
 
     def compile(self) -> Path:
         """Compile the master Markdown file into an ODT document."""

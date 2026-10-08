@@ -1,3 +1,4 @@
+import sys
 from typing import Final
 
 import typer
@@ -32,15 +33,22 @@ app.add_typer(
 
 
 def main() -> None:
-    # try:
-    app()
-    # except Exception as error:
-    #     typer.secho(
-    #         f"\n##### {WRITE_IT_LABEL} ΞRROR: {error}\n",
-    #         fg=typer.colors.BRIGHT_RED,
-    #         err=True,
-    #     )
-    #     sys.exit(1)
+    debug = "--debug" in sys.argv or "-d" in sys.argv
+
+    if debug:
+        sys.argv = [arg for arg in sys.argv if arg not in ("--debug", "-d")]
+        app()
+        return
+
+    try:
+        app()
+    except Exception as error:
+        typer.secho(
+            f"\n##### {WRITE_IT_LABEL} ΞRROR:\n {error}\n",
+            fg=typer.colors.BRIGHT_RED,
+            err=True,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -6,6 +6,7 @@ from typing import Final
 from jinja2 import Environment, PackageLoader
 
 from writeit.handlers.base_handler import BaseHandler
+from writeit.helpers.finder import Finder
 from writeit.models.project import Project
 from writeit.parsers.chapter_parser import ChapterParser
 
@@ -19,7 +20,11 @@ class BaseCompiler(BaseHandler, ABC):
         self._content: str = ""
 
     def compile(self) -> Path:
-        env = Environment(loader=PackageLoader("writeit", "views/templates"))
+        env = Environment(
+            loader=PackageLoader("writeit", "views/templates"),
+            trim_blocks=True,
+            lstrip_blocks=True,
+        )
         template = env.get_template(self.TEMPLATE_MASTER)
 
         values = {
@@ -80,12 +85,12 @@ class BaseCompiler(BaseHandler, ABC):
 
     @staticmethod
     def find_chapters(folder: Path) -> list[Path]:
-        files = [
-            *folder.glob("i[0-9][0-9][0-9][0-9]_v[0-9][0-9][0-9]_*.md"),
-            *folder.glob("p[0-9][0-9][0-9]_i[0-9][0-9][0-9][0-9]_v[0-9][0-9][0-9]_*.md"),
-        ]
-
-        return sorted(files)
+        return Finder.find_all(
+            folder,
+            "v[0-9]*_*.md",
+            "i[0-9]*_v[0-9]*_*.md",
+            "p[0-9]*_i[0-9]*_v[0-9]*_*.md",
+        )
 
     @staticmethod
     def find_latest_chapters(folder: Path) -> list[Path]:

@@ -8,5 +8,5 @@ app = typer.Typer(
     no_args_is_help=True,
 )
 
-app.command()(create)
-app.command()(version)
+app.command(help="Create a new file.")(create)
+app.command(help="Create a new version of a file.")(version)

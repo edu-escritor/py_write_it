@@ -1,6 +1,7 @@
 import re
 from pathlib import Path
 
+from writeit.helpers.finder import Finder
 from writeit.resolvers.base_resolver import BaseResolver
 
 
@@ -39,7 +40,7 @@ class VersionResolver(BaseResolver):
     ) -> int:
         versions: list[int] = []
 
-        for file in self.folder.glob("*.md"):
+        for file in Finder.find_all(self.folder):
             if self._get_index(file) != index:
                 continue
 

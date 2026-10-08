@@ -3,14 +3,14 @@ from datetime import date
 from pathlib import Path
 from typing import Final
 
+from writeit.enums.locales import Locales
+from writeit.enums.project_type import ProjectType
+from writeit.errors.validation_error import ValidationError
 from writeit.naming.slugifier import Slugifier
 from writeit.validators.is_folder import IsFolder
 from writeit.validators.is_none_or_not_empty_validator import IsNoneOrNotEmptyValidator
 from writeit.validators.is_not_empty_validator import IsNotEmptyValidator
 from writeit.validators.is_valida_project_part import IsValidProjectPart
-from writeit.enums.project_type import ProjectType
-from writeit.enums.locales import Locales
-from writeit.errors.validation_error import ValidationError
 
 
 class Project:
@@ -44,7 +44,7 @@ class Project:
                 current = current.parent
 
         else:
-            raise ValidationError(f"The path '{path}' does not exist!")
+            raise FileNotFoundError(f"'{path}' does not exist!")
 
         data = json.loads(project_file.read_text(encoding="utf-8"))
 
@@ -315,6 +315,10 @@ class Project:
             ),
             encoding="utf-8",
         )
+
+    def contextualized_path(self, path: str | Path) -> str:
+        path = Path(path)
+        return str(path.relative_to(self.root))
 
     def _relative_path(
         self,

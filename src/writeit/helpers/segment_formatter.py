@@ -38,6 +38,19 @@ class SegmentFormatter:
         return label.replace("«part»", word)
 
     @classmethod
+    def part_filename(cls, value: int | str, locale: Locales) -> str:
+        return (
+            "_".join(
+                [
+                    cls.part(value),
+                    cls.index(value=0, allow_zero=True),
+                    cls.part_slug(value, locale),
+                ]
+            )
+            + ".md"
+        )
+
+    @classmethod
     def index(cls, value: int | str, allow_zero: bool = False) -> str:
         if int(value) == 0 and not allow_zero:
             return ""
