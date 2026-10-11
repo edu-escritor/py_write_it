@@ -49,20 +49,19 @@ class ChapterNormalizer:
         if file == normalized:
             return file
 
+        file_date = self._file_date(file)
         renamed = self._rename(file, normalized)
-        self._replace(file, renamed)
-
+        self._replace(file, renamed, file_date)
         return renamed
 
     def _replace(
         self,
         source: Path,
         destination: Path,
+        file_date: date,
     ) -> None:
-        value = self.project.files.get(source, date.today())
-
         self.project.remove_file(source)
-        self.project.add_file(destination, value)
+        self.project.add_file(destination, file_date)
         self.project.save()
 
     def _rename(
@@ -113,3 +112,16 @@ class ChapterNormalizer:
         files.sort()
 
         return files
+
+    def _file_date(self, file: Path) -> date:
+        dates = [date.today()]
+
+        registered = self.project.files.get(file)
+        if registered is not None:
+            dates.append(registered)
+
+        if file.exists():
+            created = date.fromtimestamp(file.stat().st_ctime)
+            dates.append(created)
+
+        return min(dates)

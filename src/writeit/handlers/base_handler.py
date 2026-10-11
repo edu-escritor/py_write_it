@@ -38,7 +38,7 @@ class BaseHandler(ABC):
         file.write_text("", encoding="utf-8")
 
     def render_template(self, template_name: str, values: dict[str, str]) -> str:
-        env = Environment(loader=PackageLoader("writeit", "views/templates"))
+        env = Environment(loader=PackageLoader("writeit.views", "templates"))
         template = env.get_template(template_name)
         return template.render(**values)
 

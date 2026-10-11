@@ -7,6 +7,7 @@ from writeit.enums.locales import Locales
 from writeit.enums.project_type import ProjectType
 from writeit.errors.validation_error import ValidationError
 from writeit.naming.slugifier import Slugifier
+from writeit.validators.has_context_folder import HasContextFolder
 from writeit.validators.is_folder import IsFolder
 from writeit.validators.is_none_or_not_empty_validator import IsNoneOrNotEmptyValidator
 from writeit.validators.is_not_empty_validator import IsNotEmptyValidator
@@ -250,12 +251,13 @@ class Project:
         file: str | Path,
         value: date,
     ) -> None:
-        file = self._relative_path(file)
+        to_add = self._relative_path(file)
+        to_add = HasContextFolder.validate(to_add)
 
-        if file in self._files:
+        if to_add in self._files:
             return
 
-        self._files[file] = value
+        self._files[to_add] = value
         self._files = dict(sorted(self._files.items()))
 
     def remove_file(
