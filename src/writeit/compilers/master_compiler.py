@@ -10,6 +10,7 @@ from writeit.compilers.base_compiler import BaseCompiler
 from writeit.compilers.chaptered_compiler import ChapteredCompiler
 from writeit.compilers.parted_compiler import PartedCompiler
 from writeit.compilers.standalone_compiler import StandaloneCompiler
+from writeit.handlers.project.project_create_handler import ProjectCreateHandler
 from writeit.models.project import Project
 
 
@@ -55,29 +56,38 @@ class MasterCompiler:
 
         return self._format_tree(found_files)
 
-    def compile(self) -> Path:
+    def compile(self, no_template: bool = False) -> Path:
         """Compile the master Markdown file into an ODT document."""
         source = self._project.root / BaseCompiler.FILE
-        destination = self._project.root / (self._project.slug + "_" + date.today().isoformat() + ".odt")
-        template = self._prepare_template()
+
+        destination = (
+            self._project.root
+            / ProjectCreateHandler.FOLDER_META
+            / (self._project.slug + "_" + date.today().isoformat() + ".odt")
+        )
+
+        command = [
+            self.PANDOC,
+            str(source),
+            "--from=" + "".join(self.OPTIONS),
+            "--output=" + str(destination),
+        ]
+
+        template = None
 
         try:
-            subprocess.run(
-                [
-                    self.PANDOC,
-                    str(source),
-                    "--from=" + "".join(self.OPTIONS),
-                    "--reference-doc=" + str(template),
-                    "--output=" + str(destination),
-                ],
-                check=True,
-            )
+            if not no_template:
+                template = self._prepare_template()
+                command.extend(["--reference-doc", str(template)])
+
+            subprocess.run(command, check=True)
         finally:
-            template.unlink(missing_ok=True)
+            if template is not None:
+                template.unlink(missing_ok=True)
 
         return destination
 
-    def build(self) -> Path:
+    def build(self, no_template: bool = False) -> Path:
         """Assemble the project and compile it into an ODT document."""
         self.assemble()
 
